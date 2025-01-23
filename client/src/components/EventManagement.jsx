@@ -88,7 +88,7 @@ export default function EventManagement({
   const fetchEvents = async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get("http://localhost:3001/upcomingevent/getallevent", {
+      const response = await axios.get("https://gd-go-c-ue.vercel.app/upcomingevent/getallevent", {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -106,7 +106,7 @@ export default function EventManagement({
   const removeEvent = async (id) => {
     setIsLoading(true)
     try {
-      const response = await axios.delete(`http://localhost:3001/upcomingevent/deletevent/${id}`, {
+      const response = await axios.delete(`https://gd-go-c-ue.vercel.app/upcomingevent/deletevent/${id}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -127,7 +127,7 @@ export default function EventManagement({
 
   const addEvent = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/upcomingevent/createevent", newEvent)
+      const response = await axios.post("https://gd-go-c-ue.vercel.app/upcomingevent/createevent", newEvent)
       setNotification({ visible: true, message: "Event created successfully", success: true })
       await fetchEvents()
       setNewEvent({
@@ -146,7 +146,7 @@ export default function EventManagement({
   }
   const updateEvent = async () => {
     try {
-      const response = await axios.put(`http://localhost:3001/upcomingevent/updateevent/${eventid}`, newEvent)
+      const response = await axios.put(`https://gd-go-c-ue.vercel.app/upcomingevent/updateevent/${eventid}`, newEvent)
       setNotification({ visible: true, message: "Event update successfully", success: true })
       await fetchEvents()
       setNewEvent({

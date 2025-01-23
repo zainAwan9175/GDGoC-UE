@@ -49,7 +49,7 @@ const TeamManagement = ({ handleDragOver, handleDragLeave, handleDrop, isDraggin
   // API call to add a new team member
   const putData = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3001/team/createmember", data);
+      const response = await axios.post("https://gd-go-c-ue.vercel.app/team/createmember", data);
       console.log(response.data);
       setNotification({ visible: true, message: "Member created successfully", success: true });
       fetchTeam();
@@ -84,7 +84,7 @@ const TeamManagement = ({ handleDragOver, handleDragLeave, handleDrop, isDraggin
   const fetchTeam = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3001/team/getallmembers");
+      const response = await axios.get("https://gd-go-c-ue.vercel.app/team/getallmembers");
       setTeamMembers(response.data.Team || []);
     } catch (error) {
       console.error("Error fetching team members:", error);
@@ -97,7 +97,7 @@ const TeamManagement = ({ handleDragOver, handleDragLeave, handleDrop, isDraggin
   const removeTeamMember = async (id) => {
     setIsLoading(true);
     try {
-      const response = await axios.delete(`http://localhost:3001/team/deletemember/${id}`);
+      const response = await axios.delete(`https://gd-go-c-ue.vercel.app/team/deletemember/${id}`);
       if (response.data.Member) {
         fetchTeam();
       } else {
