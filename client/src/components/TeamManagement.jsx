@@ -135,11 +135,11 @@ const TeamManagement = ({ handleDragOver, handleDragLeave, handleDrop, isDraggin
           </div>
         </div>
       )}
-      <Card className="mb-8">
+      <Card className="mb-8 ">
         <CardHeader>
           <CardTitle style={{ color: googleColors.blue }}>Add Team Member</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-5">
           <Input
             placeholder="Name"
             value={newMember.name}
