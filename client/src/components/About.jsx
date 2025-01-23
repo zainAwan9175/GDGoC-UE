@@ -1,60 +1,60 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ChevronRight, Code, Users, Lightbulb, Calendar } from 'lucide-react'
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card"
-import { Label } from "../components/ui/label"
-import { Input } from "../components/ui/input"
-import { Textarea } from "../components/ui/textarea"
-import { Button } from "../components/ui/button"
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronRight, Code, Users, Lightbulb, Calendar } from 'lucide-react';
+import Link from 'next/link';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card';
+import { Label } from '../components/ui/label';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { Button } from '../components/ui/button';
 
 export default function AboutSection() {
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
     Regarding: '',
     message: ''
-  })
-  const [formStatus, setFormStatus] = useState('')
+  });
+  const [formStatus, setFormStatus] = useState('');
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
-    })
-  }
+    });
+  };
 
   const tabs = [
     { icon: <Code className="w-6 h-6" />, title: 'Learn', color: 'bg-blue-500' },
     { icon: <Users className="w-6 h-6" />, title: 'Connect', color: 'bg-red-500' },
     { icon: <Lightbulb className="w-6 h-6" />, title: 'Grow', color: 'bg-yellow-500' },
-    { icon: <Calendar className="w-6 h-6" />, title: 'Events', color: 'bg-green-500' },
-  ]
+    { icon: <Calendar className="w-6 h-6" />, title: 'Events', color: 'bg-green-500' }
+  ];
 
   const content = [
     {
       title: 'Learn Cutting-Edge Technologies',
-      description: 'Dive deep into the latest Google technologies and industry best practices through workshops, codelabs, and tech talks.',
+      description: 'Dive deep into the latest Google technologies and industry best practices through workshops, codelabs, and tech talks.'
     },
     {
       title: 'Connect with Fellow Developers',
-      description: 'Build a network of like-minded individuals, share ideas, and collaborate on exciting projects within our vibrant community.',
+      description: 'Build a network of like-minded individuals, share ideas, and collaborate on exciting projects within our vibrant community.'
     },
     {
       title: 'Grow Your Skills and Career',
-      description: 'Enhance your technical skills, gain leadership experience, and boost your career prospects in the tech industry.',
+      description: 'Enhance your technical skills, gain leadership experience, and boost your career prospects in the tech industry.'
     },
     {
       title: 'Attend Exciting Events',
-      description: 'Participate in hackathons, conferences, and meetups to showcase your skills and learn from industry experts.',
-    },
-  ]
+      description: 'Participate in hackathons, conferences, and meetups to showcase your skills and learn from industry experts.'
+    }
+  ];
 
   return (
     <section className="relative py-16 bg-white">
-      <div className="container z-50 mx-auto px-4 flex justify-center items-center        flex-col">
+      <div className="container z-50 mx-auto px-4 flex justify-center items-center flex-col">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,7 +66,7 @@ export default function AboutSection() {
             Empowering students and developers to learn, connect, and grow with Google technologies.
           </p>
         </motion.div>
-        
+
         {/* Tabs Section */}
         <div className="w-[95%] md:w-[75%] z-20">
           <motion.div
@@ -101,7 +101,7 @@ export default function AboutSection() {
               >
                 <h3 className="text-2xl font-bold text-gray-800">{content[activeTab].title}</h3>
                 <p className="text-gray-600">{content[activeTab].description}</p>
-                
+
                 <motion.a
                   href="#"
                   className="inline-flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300"
@@ -125,7 +125,7 @@ export default function AboutSection() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-center text-gray-800">Contact Us</CardTitle>
               <CardDescription className="text-center">
-                Have any questions? Send us a message and we'll get back to you as soon as possible.
+                Have any questions? Send us a message and we&apos;ll get back to you as soon as possible.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -162,11 +162,9 @@ export default function AboutSection() {
               </Link>
             </CardFooter>
           </Card>
-          {formStatus && (
-            <p className="mt-4 text-center text-muted-foreground">{formStatus}</p>
-          )}
+          {formStatus && <p className="mt-4 text-center text-muted-foreground">{formStatus}</p>}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
