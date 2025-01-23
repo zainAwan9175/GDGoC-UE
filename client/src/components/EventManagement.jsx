@@ -90,7 +90,7 @@ export default function EventManagement({
   const fetchEvents = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3001/upcomingevent/getallevent", {
+      const response = await axios.get("https://gd-go-c-ue.vercel.app/upcomingevent/getallevent", {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -108,7 +108,7 @@ export default function EventManagement({
   const removeEvent = async (id) => {
     setIsLoading(true);
     try {
-      const response = await axios.delete(`http://localhost:3001/upcomingevent/deletevent/${id}`, {
+      const response = await axios.delete(`https://gd-go-c-ue.vercel.app/upcomingevent/deletevent/${id}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -129,7 +129,7 @@ export default function EventManagement({
 
   const addEvent = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/upcomingevent/createevent', newEvent);
+      const response = await axios.post('https://gd-go-c-ue.vercel.app/upcomingevent/createevent', newEvent);
       setNotification({ visible: true, message: 'Event created successfully', success: true });
       await fetchEvents();
       setNewEvent({
@@ -149,7 +149,7 @@ export default function EventManagement({
   const updateEvent  = async () => {
   
     try {
-      const response = await axios.put(`http://localhost:3001/upcomingevent/updateevent/${eventid}`, newEvent);
+      const response = await axios.put(`https://gd-go-c-ue.vercel.app/upcomingevent/updateevent/${eventid}`, newEvent);
       setNotification({ visible: true, message: 'Event update successfully', success: true });
       await fetchEvents();
       setNewEvent({
@@ -212,7 +212,7 @@ export default function EventManagement({
               onClick={() => document.getElementById('eventFileInput').click()}
             >
               {newEvent.image ? (
-                <img
+                <Image
                   src={newEvent.image}
                   alt="Preview"
                   className="max-h-32 mx-auto"
@@ -293,7 +293,7 @@ export default function EventManagement({
                 </div>
                 {newEvent.Gallery_Images.map((url, index) => (
                   <div key={index} className='flex justify-between p-2 border border-black'>
-                    <img src={url} className='w-[80px]' alt={`Uploaded ${index}`} />
+                    <Image src={url} className='w-[80px]' alt={`Uploaded ${index}`} />
                     <button type='button' className='text-red-700' onClick={() => deleteImage(index)}>DELETE</button>
                   </div>
                 ))}
@@ -351,7 +351,7 @@ export default function EventManagement({
                   style={{ borderLeft: `4px solid ${event.color}` }}
                 >
                   <div className="flex items-center space-x-4">
-                    <img
+                    <Image
                       src={event.image}
                       alt={event.title}
                       className="w-12 h-12 rounded-full object-cover"
@@ -433,7 +433,7 @@ export default function EventManagement({
                   style={{ borderLeft: `4px solid ${event.color}` }}
                 >
                   <div className="flex items-center space-x-4">
-                    <img
+                    <Image
                       src={event.image}
                       alt={event.title}
                       className="w-12 h-12 rounded-full object-cover"

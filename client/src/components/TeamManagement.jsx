@@ -59,7 +59,7 @@ const TeamManagement = ({
  const putdata=async(data)=>{
 
   try {
-    const response = await axios.post('http://localhost:3001/team/createmember', data);
+    const response = await axios.post('https://gd-go-c-ue.vercel.app/team/createmember', data);
     console.log(response.data)
     setNotification({ visible: true, message: 'Member created successfully', success: true })
    fetchTeam();
@@ -105,7 +105,7 @@ const TeamManagement = ({
     setIsLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 2000)); // 2-second delay
-      const response = await axios.delete(`http://localhost:3001/team/deletemember/${id}`, {
+      const response = await axios.delete(`https://gd-go-c-ue.vercel.app/team/deletemember/${id}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -129,7 +129,7 @@ const TeamManagement = ({
   const fetchTeam = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:3001/team/getallmembers", {
+      const response = await axios.get("https://gd-go-c-ue.vercel.app/team/getallmembers", {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -186,7 +186,8 @@ const TeamManagement = ({
               onClick={() => document.getElementById('memberFileInput').click()}
             >
               {newMember.image ? (
-                <img
+                <Image
+
                   src={URL.createObjectURL(newMember.image)}
                   alt="Preview"
                   className="max-h-32 mx-auto"
@@ -256,7 +257,7 @@ const TeamManagement = ({
                 style={{ borderLeft: `4px solid ${Object.values(googleColors)[index % 4]}` }}
               >
                 <div className="flex items-center space-x-4">
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
                     className="w-12 h-12 rounded-full object-cover"

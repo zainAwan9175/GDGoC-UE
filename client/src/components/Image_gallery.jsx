@@ -16,7 +16,7 @@ export default function ImageGallery({ eventid }) {
   const fetchEvent = async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get(`http://localhost:3001/upcomingevent/getoneevent/${eventid}`, {
+      const response = await axios.get(`https://gd-go-c-ue.vercel.app/upcomingevent/getoneevent/${eventid}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
