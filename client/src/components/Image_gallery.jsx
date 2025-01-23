@@ -1,22 +1,21 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect, useCallback } from "react"
+import axios from "axios"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
 import { Button } from "../components/ui/button"
 
-const googleColors = ['#EA4335', '#FBBC05', '#34A853', '#4285F4']
+const googleColors = ["#EA4335", "#FBBC05", "#34A853", "#4285F4"]
 
 export default function ImageGallery({ eventid }) {
   const [isLoading, setIsLoading] = useState(true)
   const [event, setEvent] = useState(null)
 
-  const fetchEvent = async () => {
+  const fetchEvent = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get(`https://gd-go-c-ue.vercel.app/upcomingevent/getoneevent/${eventid}`, {
+      const response = await axios.get(`http://localhost:3001/upcomingevent/getoneevent/${eventid}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
@@ -30,28 +29,27 @@ export default function ImageGallery({ eventid }) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [eventid])
 
   useEffect(() => {
     fetchEvent()
-  }, [eventid])
+  }, [fetchEvent])
 
   const handleBack = () => {
-    window.history.back();
+    window.history.back()
   }
 
   return (
     <section className="relative py-20 bg-white overflow-hidden min-h-screen">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      
+
       <Button
         variant="outline"
         size="lg"
-        className="absolute left-4 top-4 z-20 flex items-center gap-2 text-gray-800 hover:text-gray-600 transition-colors"
+        className="absolute left-4 top-4 z-20 text-gray-800 hover:text-gray-600 transition-colors"
         onClick={handleBack}
       >
-        <ArrowLeft className="w-5 h-5" />
-        Back to Past Events
+        Back
       </Button>
 
       <div className="container z-10 mt-16 mx-auto px-4">
@@ -78,9 +76,9 @@ export default function ImageGallery({ eventid }) {
                   className="absolute w-16 h-16 border-4 rounded-full animate-spin"
                   style={{
                     borderColor: `${color} transparent transparent transparent`,
-                    animationDuration: '1.5s',
+                    animationDuration: "1.5s",
                     animationDelay: `${index * 0.2}s`,
-                    transform: `rotate(${index * 90}deg)`
+                    transform: `rotate(${index * 90}deg)`,
                   }}
                 ></div>
               ))}
@@ -99,7 +97,7 @@ export default function ImageGallery({ eventid }) {
               >
                 <div className="relative overflow-hidden rounded-lg shadow-lg">
                   <Image
-                    src={url}
+                    src={url || "/placeholder.svg"}
                     alt={`Event image ${index + 1}`}
                     width={300}
                     height={200}
@@ -122,7 +120,7 @@ export default function ImageGallery({ eventid }) {
         }}
         transition={{
           duration: 8,
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: "reverse",
         }}
         className="absolute -top-20 -left-20 w-20 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70"
@@ -135,7 +133,7 @@ export default function ImageGallery({ eventid }) {
         }}
         transition={{
           duration: 8,
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: "reverse",
         }}
         className="absolute -right-20 -bottom-20 w-20 h-64 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"
@@ -143,3 +141,4 @@ export default function ImageGallery({ eventid }) {
     </section>
   )
 }
+

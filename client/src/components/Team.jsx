@@ -156,7 +156,7 @@ export default function Component() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("https://gd-go-c-ue.vercel.app/team/getallmembers", {
+        const response = await axios.get("http://localhost:3001/team/getallmembers", {
           headers: {
             "Cache-Control": "no-cache",
             Pragma: "no-cache",

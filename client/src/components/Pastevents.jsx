@@ -19,7 +19,7 @@ const PastEvents = () => {
   const fetchEvents = async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get("https://gd-go-c-ue.vercel.app/upcomingevent/getpastevents", {
+      const response = await axios.get("http://localhost:3001/upcomingevent/getpastevents", {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",

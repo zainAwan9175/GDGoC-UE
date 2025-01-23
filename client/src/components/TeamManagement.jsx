@@ -1,158 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, ArrowUp } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import axios from 'axios';
-import { storage } from "../../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import Image from 'next/image';
+import React, { useState, useEffect } from "react"
+import { Plus, Trash2, ArrowUp } from "lucide-react"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import axios from "axios"
+import { storage } from "../../firebase"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import Image from "next/image"
 
-
-const TeamManagement = ({ 
- 
+const TeamManagement = ({
   handleDragOver,
   handleDragLeave,
   handleDrop,
 
   isDragging,
-  googleColors 
+  googleColors,
 }) => {
-  const [teamMembers, setTeamMembers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState({ visible: false, message: '', success: false });
+  const [teamMembers, setTeamMembers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [notification, setNotification] = useState({ visible: false, message: "", success: false })
 
-    
   const [newMember, setNewMember] = useState({
-    name: '',
-    position: '',
+    name: "",
+    position: "",
     image: null,
-    linkedin: '',
-    github: '',
-    level: 1
-  });
+    linkedin: "",
+    github: "",
+    level: 1,
+  })
   const uploadImageToFirebase = async (file) => {
-    if (!file) return null;
+    if (!file) return null
 
-    const imageRef = ref(storage, `teammember/${file.name}`);
+    const imageRef = ref(storage, `teammember/${file.name}`)
     try {
-      const snapshot = await uploadBytes(imageRef, file);
-      const url = await getDownloadURL(snapshot.ref);
-      return url;
+      const snapshot = await uploadBytes(imageRef, file)
+      const url = await getDownloadURL(snapshot.ref)
+      return url
     } catch (error) {
-      console.error("Error uploading image:", error);
-      setNotification({ visible: true, message: 'Image upload failed.', success: false });
-      return null;
+      console.error("Error uploading image:", error)
+      setNotification({ visible: true, message: "Image upload failed.", success: false })
+      return null
     }
-  };
-
+  }
 
   const handleFileInputChange = (e, type) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setNewMember({ ...newMember, image: file });
-
+    const file = e.target.files[0]
+    if (file && file.type.startsWith("image/")) {
+      setNewMember({ ...newMember, image: file })
     }
-    
-  };
-  
- const putdata=async(data)=>{
-
-  try {
-    const response = await axios.post('https://gd-go-c-ue.vercel.app/team/createmember', data);
-    console.log(response.data)
-    setNotification({ visible: true, message: 'Member created successfully', success: true })
-   fetchTeam();
-  
-
-  //  setNotification({ visible: true, message: 'Event created successfully!', success: true }); // Show success notification
-  } catch (error) {
-    console.error("Error adding Memeber:", error);
-    setNotification({ visible: true, message: 'Something went wrong', success: false })
-    //setNotification({ visible: true, message: 'Failed to create book due to an error.', success: false }); // Show error notification
   }
-};
 
+  const putdata = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:3001/team/createmember", data)
+      console.log(response.data)
+      setNotification({ visible: true, message: "Member created successfully", success: true })
+      fetchTeam()
 
-  const addTeamMember = async() => {
-  if(newMember.image){
-    const urls=await  uploadImageToFirebase(newMember.image)
-    let newmember={}
-     setNewMember((pre)=>{
-      newmember={...pre,image:urls}
-      return newmember;
-     })
-
-     putdata(newmember)
-     setNewMember({
-      name: '',
-      position: '',
-      image: null,
-      linkedin: '',
-      github: '',
-      level: 1
-    })
+      //  setNotification({ visible: true, message: 'Event created successfully!', success: true }); // Show success notification
+    } catch (error) {
+      console.error("Error adding Memeber:", error)
+      setNotification({ visible: true, message: "Something went wrong", success: false })
+      //setNotification({ visible: true, message: 'Failed to create book due to an error.', success: false }); // Show error notification
+    }
   }
-  
-  };
+
+  const addTeamMember = async () => {
+    if (newMember.image) {
+      const urls = await uploadImageToFirebase(newMember.image)
+      let newmember = {}
+      setNewMember((pre) => {
+        newmember = { ...pre, image: urls }
+        return newmember
+      })
+
+      putdata(newmember)
+      setNewMember({
+        name: "",
+        position: "",
+        image: null,
+        linkedin: "",
+        github: "",
+        level: 1,
+      })
+    }
+  }
 
   useEffect(() => {
-    fetchTeam();
-  }, []);
+    fetchTeam()
+  }, [])
 
-
-  const removeTeamMember = async(id) => {
-    setIsLoading(true);
+  const removeTeamMember = async (id) => {
+    setIsLoading(true)
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // 2-second delay
-      const response = await axios.delete(`https://gd-go-c-ue.vercel.app/team/deletemember/${id}`, {
+      await new Promise((resolve) => setTimeout(resolve, 2000)) // 2-second delay
+      const response = await axios.delete(`http://localhost:3001/team/deletemember/${id}`, {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
           Expires: "0",
         },
-      });
+      })
 
-  
-      if(response.data.Member) {
-        fetchTeam();
+      if (response.data.Member) {
+        fetchTeam()
       } else {
-        console.log("member not found");
+        console.log("member not found")
       }
-    } catch(err) {
-      console.log("something went wrong", err);
+    } catch (err) {
+      console.log("something went wrong", err)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const fetchTeam = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      const response = await axios.get("https://gd-go-c-ue.vercel.app/team/getallmembers", {
+      const response = await axios.get("http://localhost:3001/team/getallmembers", {
         headers: {
           "Cache-Control": "no-cache",
           Pragma: "no-cache",
           Expires: "0",
         },
-      });
-      setTeamMembers(response.data.Team);
+      })
+      setTeamMembers(response.data.Team)
     } catch (error) {
-      console.error("Error fetching Team:", error);
+      console.error("Error fetching Team:", error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   const closeNotification = () => {
-    setNotification({ ...notification, visible: false });
-  };
-
+    setNotification({ ...notification, visible: false })
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
-          {notification.visible && (
-        <div className={`fixed top-0 left-1/2 transform -translate-x-1/2 p-4 mt-4 rounded-md shadow-md ${notification.success ? 'bg-green-200' : 'bg-red-200'}`}>
+      {notification.visible && (
+        <div
+          className={`fixed top-0 left-1/2 transform -translate-x-1/2 p-4 mt-4 rounded-md shadow-md ${notification.success ? "bg-green-200" : "bg-red-200"}`}
+        >
           <div className="flex justify-between items-center gap-3">
             <p className="text-sm text-gray-800">{notification.message}</p>
             <button onClick={closeNotification} className="text-gray-600 hover:text-gray-800 focus:outline-none">
@@ -179,32 +168,31 @@ const TeamManagement = ({
             />
             <div
               className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer ${
-                isDragging ? 'border-blue-500' : 'border-gray-300'
+                isDragging ? "border-blue-500" : "border-gray-300"
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDrop(e, 'member')}
-              onClick={() => document.getElementById('memberFileInput').click()}
+              onDrop={(e) => handleDrop(e, "member")}
+              onClick={() => document.getElementById("memberFileInput").click()}
             >
               {newMember.image ? (
                 <Image
-
-                  src={URL.createObjectURL(newMember.image)}
+                  src={URL.createObjectURL(newMember.image) || "/placeholder.svg"}
                   alt="Preview"
+                  width={128}
+                  height={128}
                   className="max-h-32 mx-auto"
                 />
               ) : (
                 <div className="flex flex-col items-center">
                   <ArrowUp className="h-8 w-8 text-blue-500 mb-2" />
-                  <p className="text-sm text-gray-500">
-                    Drag and drop an image or click to select
-                  </p>
+                  <p className="text-sm text-gray-500">Drag and drop an image or click to select</p>
                 </div>
               )}
               <input
                 id="memberFileInput"
                 type="file"
-                onChange={(e) => handleFileInputChange(e, 'member')}
+                onChange={(e) => handleFileInputChange(e, "member")}
                 accept="image/*"
                 className="hidden"
               />
@@ -220,9 +208,7 @@ const TeamManagement = ({
               onChange={(e) => setNewMember({ ...newMember, github: e.target.value })}
             />
             <Select
-              onValueChange={(value) =>
-                setNewMember({ ...newMember, level: parseInt(value) })
-              }
+              onValueChange={(value) => setNewMember({ ...newMember, level: Number.parseInt(value) })}
               defaultValue={newMember.level.toString()}
             >
               <SelectTrigger>
@@ -235,10 +221,7 @@ const TeamManagement = ({
                 <SelectItem value="4">Level 4</SelectItem>
               </SelectContent>
             </Select>
-            <Button
-              onClick={addTeamMember}
-              style={{ backgroundColor: googleColors.blue, color: 'white' }}
-            >
+            <Button onClick={addTeamMember} style={{ backgroundColor: googleColors.blue, color: "white" }}>
               <Plus className="mr-2 h-4 w-4" /> Add Team Member
             </Button>
           </div>
@@ -259,8 +242,10 @@ const TeamManagement = ({
               >
                 <div className="flex items-center space-x-4">
                   <Image
-                    src={member.image}
+                    src={member.image || "/placeholder.svg"}
                     alt={member.name}
+                    width={48}
+                    height={48}
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>
@@ -336,7 +321,8 @@ const TeamManagement = ({
         }
       `}</style>
     </div>
-  );
-};
+  )
+}
 
-export default TeamManagement;
+export default TeamManagement
+
