@@ -45,7 +45,7 @@ export default function ContactForm() {
               <Mail className="w-6 h-6 text-[#4285F4]" />
               <span>Contact Us</span>
             </CardTitle>
-            <CardDescription>We're here to help and answer any question you might have.</CardDescription>
+            <CardDescription>We&apos;re here to help and answer any question you might have.</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
