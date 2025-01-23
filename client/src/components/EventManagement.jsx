@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import axios from 'axios';
-
+import Image from 'next/image';
 export default function EventManagement({
   handleDragOver,
   handleDragLeave,
