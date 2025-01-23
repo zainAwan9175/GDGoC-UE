@@ -1,14 +1,13 @@
 'use client'
-import React from 'react'
-import Teammanigment from "../../components/TeamManagement"
+import React from 'react';
+import Teammanigment from "../../components/TeamManagement";
 
-function page() {
+function Page() {
   return (
     <div>
-        <Teammanigment></Teammanigment>
-      
+      <Teammanigment />
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;
