@@ -5,12 +5,13 @@ import { getStorage } from 'firebase/storage';
 
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID
+  apiKey: "AIzaSyBVVqHX4XvoCZWEDYFE4KtklaUR_XPKDm0",
+  authDomain: "ue-book-club.firebaseapp.com",
+  projectId: "ue-book-club",
+  storageBucket: "ue-book-club.appspot.com",
+  messagingSenderId: "637451155361",
+  appId: "1:637451155361:web:bac279a3b85ad093a0bde0",
+  measurementId: "G-HLQWHQY4J5"
 };
 
 
