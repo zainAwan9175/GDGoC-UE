@@ -270,7 +270,7 @@ export default function GDSCSlider() {
                           className="mt-3 px-4 py-1.5 bg-white text-gray-900 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-300"
                           aria-label={`Learn more about ${slides[currentIndex].title}`}
                         >
-                          Learn More
+                         RSVP
                         </motion.button>
                       </Link>
                     </div>
